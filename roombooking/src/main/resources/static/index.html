@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BookMyRoom</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <h1>BookMyRoom</h1>
+            <p>College Guest House Booking System</p>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <button class="nav-button active" onclick="showPage('dashboard', this)">
+                Dashboard
+            </button>
+
+            <button class="nav-button" onclick="showPage('rooms', this)">
+                Rooms
+            </button>
+
+            <button class="nav-button" onclick="showPage('guests', this)">
+                Guests
+            </button>
+
+            <button class="nav-button" onclick="showPage('bookings', this)">
+                Bookings
+            </button>
+
+            <button class="nav-button" onclick="showPage('reports', this)">
+                Reports
+            </button>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+
+        <!-- ================= DASHBOARD ================= -->
+
+        <section id="dashboardPage" class="page active-page">
+
+            <h2>Dashboard</h2>
+
+            <!-- Simple information panel -->
+
+            <div class="welcome-box">
+
+                <h3>Guest House Overview</h3>
+
+                <p>
+                    Monitor rooms, guests and bookings from one place.
+                </p>
+
+                <p class="small-text">
+                    Current information is loaded from the booking database.
+                </p>
+
+            </div>
+
+
+            <!-- Summary -->
+
+            <div class="summary">
+
+                <div class="summary-box">
+
+                    <h3>Total Rooms</h3>
+
+                    <p id="totalRooms">
+                        0
+                    </p>
+
+                </div>
+
+
+                <div class="summary-box">
+
+                    <h3>Total Guests</h3>
+
+                    <p id="totalGuests">
+                        0
+                    </p>
+
+                </div>
+
+
+                <div class="summary-box">
+
+                    <h3>Total Bookings</h3>
+
+                    <p id="totalBookings">
+                        0
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Room Occupancy -->
+
+            <div class="content-box">
+
+                <h3>Room Occupancy</h3>
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>Room No.</th>
+                        <th>Type</th>
+                        <th>Capacity</th>
+                        <th>Rate / Night</th>
+                        <th>Status</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="roomTable">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- Recent Bookings -->
+
+            <div class="content-box">
+
+                <h3>Recent Bookings</h3>
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Room</th>
+                        <th>Guest</th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                        <th>Status</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="dashboardBookingTable">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= ROOMS ================= -->
+
+        <section id="roomsPage" class="page">
+
+            <h2>Rooms</h2>
+
+            <div class="content-box">
+
+                <h3>Search Rooms</h3>
+
+                <div class="search-area">
+
+                    <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Room number or type">
+
+                    <button onclick="searchRooms()">
+                        Search
+                    </button>
+
+                    <button onclick="loadRooms()">
+                        Show All
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="content-box">
+
+                <h3>Room List</h3>
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>Room No.</th>
+                        <th>Type</th>
+                        <th>Capacity</th>
+                        <th>Rate / Night</th>
+                        <th>Status</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="roomsPageTable">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= GUESTS ================= -->
+
+        <section id="guestsPage" class="page">
+
+            <h2>Guests</h2>
+
+            <div class="content-box">
+
+                <h3>Guest Records</h3>
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>Guest ID</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="guestTable">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= BOOKINGS ================= -->
+
+        <section id="bookingsPage" class="page">
+
+            <h2>Bookings</h2>
+
+            <div class="content-box">
+
+                <h3>Booking Records</h3>
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Room</th>
+                        <th>Guest</th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                        <th>Total Cost</th>
+                        <th>Status</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="bookingTable">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= REPORTS ================= -->
+<section id="reportsPage" class="page">
+
+    <h2>Reports</h2>
+
+    <div class="report-highlight">
+
+        <h3>Booking Report</h3>
+
+        <p>
+            Select a period to view the bookings recorded during that time.
+        </p>
+
+    </div>
+
+
+    <!-- Date Selection -->
+
+    <div class="content-box">
+
+        <h3>Select Period</h3>
+
+        <div class="report-search">
+
+            <div>
+                <label for="reportFrom">
+                    From Date
+                </label>
+
+                <input
+                    type="date"
+                    id="reportFrom">
+            </div>
+
+
+            <div>
+                <label for="reportTo">
+                    To Date
+                </label>
+
+                <input
+                    type="date"
+                    id="reportTo">
+            </div>
+
+
+            <button onclick="generateReport()">
+                Generate Report
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Report Summary -->
+
+    <div id="reportResult">
+
+        <div class="report-summary">
+
+            <div class="report-item">
+
+                <span>Total Rooms</span>
+
+                <strong id="reportTotalRooms">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+                <span>Total Bookings</span>
+
+                <strong id="reportTotalBookings">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+                <span>Confirmed</span>
+
+                <strong id="reportConfirmed">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+                <span>Cancelled</span>
+
+                <strong id="reportCancelled">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- Booking Details -->
+
+        <div class="content-box">
+
+            <h3>Booking Details</h3>
+
+            <table>
+
+                <thead>
+
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Room</th>
+                    <th>Guest</th>
+                    <th>Check-in</th>
+                    <th>Check-out</th>
+                    <th>Status</th>
+                </tr>
+
+                </thead>
+
+                <tbody id="reportBookingTable">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+<script src="js/script.js"></script>
+
+</body>
+
+</html>
